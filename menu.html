@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Our Special Moment ❤</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Roboto:wght@300;400;500&display=swap');
+
+        body {
+            background: #FFF0F5;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .romantic-picker {
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 800px;
+            margin: 20px;
+            padding: 40px;
+        }
+
+        .header {
+            font-family: 'Dancing Script', cursive;
+            color: #FF69B4;
+            font-size: 48px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .special-message {
+            font-family: 'Dancing Script', cursive;
+            color: #FF1493;
+            font-size: 32px;
+            text-align: center;
+            margin: 30px 0;
+            padding: 25px;
+            border: 3px dashed #FF69B4;
+            border-radius: 15px;
+            background: rgba(255, 105, 180, 0.1);
+            line-height: 1.5;
+        }
+
+        .calendar {
+            border: 2px solid #FFB6C1;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .month-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .month-name {
+            color: #9370DB;
+            font-weight: bold;
+            font-size: 32px;
+        }
+
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .days-grid > div {
+            padding: 10px;
+        }
+
+        .day {
+            width: 60px;
+            height: 60px;
+            line-height: 60px;
+            margin: auto;
+            cursor: pointer;
+            border-radius: 50%;
+            position: relative;
+            font-size: 24px;
+        }
+
+        .day.special-date {
+            background: #FF1493;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        .day.special-date::after {
+            content: '❤';
+            position: absolute;
+            top: -15px;
+            right: -5px;
+            font-size: 24px;
+            color: #FF1493;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .time-display {
+            text-align: center;
+            color: #FF1493;
+            font-size: 32px;
+            margin: 25px 0;
+            font-weight: bold;
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .heart {
+            color: #FF69B4;
+            font-size: 36px;
+            margin: 0 10px;
+            animation: beat 1s infinite;
+            display: inline-block;
+        }
+
+        @keyframes beat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* Day names styling */
+        .day-name {
+            color: #9370DB;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        /* Responsive design */
+        @media (max-width: 850px) {
+            .romantic-picker {
+                width: 95%;
+                padding: 20px;
+            }
+
+            .header {
+                font-size: 36px;
+            }
+
+            .special-message {
+                font-size: 24px;
+            }
+
+            .day {
+                width: 40px;
+                height: 40px;
+                line-height: 40px;
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body ng-app="romanticDatePicker" ng-controller="DatePickerController">
+    <div class="romantic-picker">
+        <div class="header">
+            <span class="heart">❤</span>
+            Our Special Moment
+            <span class="heart">❤</span>
+        </div>
+
+        <div class="special-message">
+            My dearest, please remember our special date:<br>
+            December 28, 2024 at 8:00 PM<br>
+            It will be a moment that will change our lives forever... ❤
+        </div>
+
+        <div class="calendar">
+            <div class="month-header">
+                <span class="month-name">December 2024</span>
+            </div>
+
+            <div class="days-grid">
+                <div class="day-name" ng-repeat="day in ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']">
+                    {{day}}
+                </div>
+                <div class="day" 
+                     ng-repeat="date in dates"
+                     ng-if="date"
+                     ng-class="{
+                         'special-date': isSpecialDate(date)
+                     }">
+                    {{date.getDate()}}
+                </div>
+            </div>
+        </div>
+
+        <div class="time-display">
+            Our special time: 8:00 PM
+            <span class="heart">❤</span>
+        </div>
+    </div>
+
+    <script>
+        angular.module('romanticDatePicker', [])
+        .controller('DatePickerController', function($scope) {
+            // Fixed to December 2024
+            $scope.currentDate = new Date(2024, 11, 1);
+            const SPECIAL_DATE = new Date(2024, 11, 28);
+
+            function generateDates() {
+                const year = 2024;
+                const month = 11; // December
+                const firstDay = new Date(year, month, 1);
+                const lastDay = new Date(year, month + 1, 0);
+                
+                $scope.dates = [];
+                
+                // Add empty spaces for days before first day of month
+                for (let i = 0; i < firstDay.getDay(); i++) {
+                    $scope.dates.push(null);
+                }
+                
+                // Add all days of the month
+                for (let date = 1; date <= lastDay.getDate(); date++) {
+                    $scope.dates.push(new Date(year, month, date));
+                }
+            }
+
+            $scope.isSpecialDate = function(date) {
+                return date && date.toDateString() === SPECIAL_DATE.toDateString();
+            };
+
+            // Initialize calendar
+            generateDates();
+        });
+    </script>
+</body>
+</html>

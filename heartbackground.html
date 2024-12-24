@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Animation</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+        .wrapper {
+            width: 100%;
+            background: #f3f4f4;
+            min-height: 100%;
+            overflow: hidden;
+            text-align: center;
+            position: relative;
+        }
+        .love {
+            position: relative;
+        }
+        .love:before,
+        .love:after {
+            position: absolute;
+            content: "";
+            left: 18px;
+            top: 0;
+            width: 18px;
+            height: 30px;
+            background: #CC2022;
+            border-radius: 30px 30px 0 0;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+        .love:after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+        .altlove {
+            background: url(http://static.indigoimages.ca/2016/shop/113439_img25_twotoneheart.png) no-repeat center;
+            width: 24px;
+            height: 21px;
+            position: relative;
+            display: block;
+        }
+        .x1, .x2, .x3, .x4, .x5, .x6, .x7, .x8, .x9, .x10 {
+            position: absolute;
+            top: 50%;
+            animation: moveclouds 15s linear infinite, sideWays 4s ease-in-out infinite alternate;
+        }
+        .x1 { left: 5%; transform: scale(0.9); opacity: 0.6; }
+        .x2 { left: 15%; transform: scale(0.6); opacity: 0.9; animation-duration: 25s, 5s; }
+        .x3 { left: 25%; transform: scale(0.8); opacity: 0.8; animation-duration: 20s, 4s; }
+        .x4 { left: 35%; transform: scale(0.75); opacity: 0.9; animation-duration: 18s, 2s; }
+        .x5 { left: 45%; transform: scale(0.8); opacity: 0.3; animation-duration: 7s, 1s; }
+        .x6 { left: 55%; transform: scale(0.85); opacity: 1; animation-duration: 10s, 9s; }
+        .x7 { left: 65%; transform: scale(0.7); opacity: 0.7; animation-duration: 22s, 6s; }
+        .x8 { left: 75%; transform: scale(0.65); opacity: 0.6; animation-duration: 14s, 3s; }
+        .x9 { left: 85%; transform: scale(0.9); opacity: 0.5; animation-duration: 12s, 2s; }
+        .x10 { left: 95%; transform: scale(0.8); opacity: 0.8; animation-duration: 16s, 5s; }
+
+        @keyframes moveclouds { 
+            0% { top: 500px; }
+            100% { top: -500px; }
+        }
+
+        @keyframes sideWays { 
+            0% { margin-left: 0px; }
+            100% { margin-left: 50px; }
+        }
+
+        @keyframes swayWays {
+            0% { transform: rotate(12deg); left: -0.3%; }
+            33% { transform: rotate(-2deg); left: 0.7%; }
+            100% { transform: rotate(0deg); left: -12%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="love x1"></div>
+        <div class="love x2"></div>
+        <div class="love x3"></div>
+        <div class="love x4"></div>
+        <div class="love x5"></div>
+        <div class="altlove x6"></div>
+        <div class="love x7"></div>
+        <div class="love x8"></div>
+        <div class="love x9"></div>
+        <div class="love x10"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,1393 @@
+<!-- journey.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Our Love Journey ❤</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Roboto:wght@300;400;500&family=Pacifico&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: #FFF0F5;
+            font-family: 'Roboto', sans-serif;
+            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            color: #FF1493;
+            font-family: 'Dancing Script', cursive;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 48px;
+            margin: 0;
+        }
+
+        .heart {
+        position: fixed;
+        color: #FF69B4;
+        opacity: 0.6;
+        z-index: 0;
+        pointer-events: none;
+        animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0% {
+            transform: translateY(0) rotate(0deg);
+            opacity: 0.6;
+        }
+        50% {
+            transform: translateY(-20vh) rotate(180deg);
+            opacity: 0.2;
+        }
+        100% {
+            transform: translateY(-40vh) rotate(360deg);
+            opacity: 0;
+        }
+    }
+
+    /* Add different animation delays for variety */
+    .heart:nth-child(2n) {
+        animation-delay: 0.5s;
+    }
+    .heart:nth-child(3n) {
+        animation-delay: 1s;
+    }
+    .heart:nth-child(4n) {
+        animation-delay: 1.5s;
+    }
+    .heart:nth-child(5n) {
+        animation-delay: 2s;
+    }
+
+        .timeline {
+            position: relative;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: #FF69B4;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 3px;
+        }
+
+        .moment {
+            padding: 20px 70px;
+            position: relative;
+            width: calc(50% - 70px);
+            animation: fadeIn 1s ease-in;
+            margin-bottom: 50px;
+        }
+
+        .moment::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            right: -17px;
+            background-color: #FF69B4;
+            border: 4px solid #FF1493;
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        .right::after {
+            left: -16px;
+        }
+
+        .content {
+            padding: 30px;
+            background-color: white;
+            position: relative;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .content:hover {
+            transform: scale(1.02);
+        }
+
+        .content h2 {
+            color: #FF1493;
+            margin-top: 0;
+            font-family: 'Dancing Script', cursive;
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .content p {
+            color: #666;
+            margin: 15px 0;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        /* .media-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+            position: relative;
+        } */
+
+        .media-grid {
+    display: grid;
+    gap: 10px;
+    margin: 20px 0;
+    position: relative;
+}
+
+/* Single image layout */
+.media-grid.single-image {
+    grid-template-columns: 1fr;
+}
+
+.media-grid.single-image .media-item {
+    aspect-ratio: 16/9;
+    width: 100%;
+}
+
+/* Two images layout */
+.media-grid.two-images {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+/* Three or more images layout */
+.media-grid.multi-images {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+/* Single image specific styles */
+.single-image .media-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Update media queries if needed */
+@media screen and (max-width: 768px) {
+    .media-grid.two-images,
+    .media-grid.multi-images {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .media-grid.two-images,
+    .media-grid.multi-images {
+        grid-template-columns: 1fr;
+    }
+}
+
+        .media-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .media-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .media-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .media-item.hidden {
+            display: none;
+        }
+
+        .more-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+        }
+
+        .modal-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90vh;
+            position: relative;
+        }
+
+        .modal-media {
+            max-height: 90vh;
+            max-width: 90vw;
+            object-fit: contain;
+        }
+
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 24px;
+            color: #000;
+            transition: all 0.3s ease;
+        }
+
+        .modal-nav:hover {
+            background: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .modal-nav.prev {
+            left: 20px;
+        }
+
+        .modal-nav.next {
+            right: 20px;
+        }
+
+        .modal-close {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 24px;
+            color: #000;
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+
+        .modal-close:hover {
+            background: white;
+            transform: scale(1.1);
+        }
+
+        .modal-thumbnails {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            z-index: 1001;
+        }
+
+        .thumbnail {
+            width: 60px;
+            height: 60px;
+            border-radius: 5px;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+            object-fit: cover;
+        }
+
+        .thumbnail.active {
+            opacity: 1;
+            border: 2px solid white;
+        }
+
+        .thumbnail:hover {
+            opacity: 1;
+        }
+
+        .next-button {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            padding: 20px 40px;
+            background: #FF1493;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 20, 147, 0.3);
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+            z-index: 1000;
+        }
+
+        .next-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 20, 147, 0.4);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @media screen and (max-width: 1024px) {
+            .timeline::after {
+                left: 31px;
+            }
+
+            .moment {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .moment::after {
+                left: 15px;
+            }
+
+            .right {
+                left: 0%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Hành trình đẹp đẽ của chúng mình ❤</h1>
+    </div>
+
+    <div class="timeline">
+        <!-- Moment 1: First Meeting -->
+        <div class="moment left">
+            <div class="content">
+                <h2>Lần đầu gặp gỡ ❤</h2>
+                <div class="media-grid">
+                    <div class="media-item">
+                        <img src="first-date/1.png" alt="First meeting 1">
+                    </div>
+                    <div class="media-item">
+                        <img src="first-date/2.png" alt="First meeting 2">
+                    </div>
+                    <div class="media-item">
+                        <img src="first-date/3.png" alt="First meeting 2">
+                    </div>
+                </div>
+                <p>Ngày mà chúng ta gặp nhau quả thật đặc biệt. Giữa hàng ngàn người xa lạ, anh vô tình bắt gặp nụ cười của em, và dường như thời gian ngừng trôi. Nụ cười ấy đã khiến trái tim anh rung động, và ngay lúc đó anh đã biết cuộc đời anh sắp thay đổi mãi mãi.</p>
+                   <div class="moment-details">
+                    <div class="location" style="display: flex; align-items: center; gap: 10px;">
+                        <a style="background: #4267B2; color: white; width: 20px; height: 20px; border-radius: 10%; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.2); transition: all 0.3s ease;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <path d="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127c-.82-.088-1.643-.13-2.467-.127-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"/>
+                            </svg>
+                        </a>
+                        <span>Facebook Dating</span>
+                    </div>
+                    
+                    <div class="date">28 Tháng 10 2023</div>
+                    <div class="emotion">✨ Khoảnh khắc diệu kỳ</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="moment right">
+            <div class="content">
+                <h2>Buổi hẹn hò đầu tiên 💑</h2>
+                <div class="media-grid">
+                    <div class="media-item">
+                        <img src="first-date/4.jpg" alt="First meeting 1">
+                    </div>
+                </div>
+                <p>Buổi hẹn hò đầu tiên hế hế, tim anh đập bumbalabum vì sự ngầu lòi và xink đẹp của elm. Được cầm tay em dắt em qua đường nà. Gòi gì tới cũng tới, anh không giữ được cái mồm và cảm xúc của mình anh quyết định nộp đơn &#x1F61C;</p>
+                   <div class="moment-details">
+                    <div class="location">🥩 🍖 Saigon Smokehouse</div>
+                    <div class="date">04 Tháng 11 2023</div>
+                    <div class="emotion">💞 Tim đập loạn nhịp</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Moment 3: First Movie Night -->
+        <div class="moment left">
+            <div class="content">
+                <h2>Lần đầu cùng người yêu đi lễ 👫✝️</h2>
+                <div class="media-grid">
+                    <div class="media-item">
+                        <img src="first-date/5.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item">
+                        <img src="first-date/8.jpg" alt="First meeting 2">
+                    </div>
+                    <div class="media-item">
+                        <img src="first-date/7.jpg" alt="First meeting 2">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/6.jpg" alt="Image 4">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/63.jpg" alt="Image 4">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/64.jpg" alt="Image 4">
+                    </div>
+                </div>
+                <p>Ước mơ đi lễ cùng người yêu cuối cùng cũng thành òi nà 😇</p>
+                   <div class="moment-details">
+                    <div class="location">⛪ Nhà thờ Đức Bà</div>
+                    <div class="date">05 Tháng 11 2023</div>
+                    <div class="emotion">🙏 Tạ ơn Chúa vì đã mang em đến</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Moment 4: First Weekend Trip -->
+        <div class="moment right">
+            <div class="content">
+                <h2>Đơn đã được duyệt và kýyyyyy 💏 </h2>
+                <div class="media-grid">
+                    <div class="media-item">
+                        <img src="first-date/9.png" alt="First meeting 1">
+                    </div>
+                    <div class="media-item">
+                        <img src="first-date/10.png" alt="First meeting 2">
+                    </div>
+                    <div class="media-item">
+                        <img src="first-date/11.png" alt="First meeting 2">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/12.png" alt="Image 4">
+                    </div>
+                </div>
+                <p>Sau 1 tuần chờ đợi, nhìu lần muốn vượt mức Pickleball mà hổng đượt. Cuối cùng thì anh cũng nhận được lời hồi đáp từ elmmmmm. Anh vẫn luôn nhớ như in cái khoảnh khắc tuyệt vời ấy (｡♥‿♥｡) </p>
+                   <div class="moment-details">
+                    <div class="location">🎬 🎦 CGV, Vivo City</div>
+                    <div class="date">11 Tháng 11 2023</div>
+                    <div class="emotion">💓 Loạn nhịp, khum thể tin được mềnh chính thức có người iuuuuu</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Moment 5: First Cooking Together -->
+        <div class="moment left">
+            <div class="content">
+                <h2>Bữa ăn vô tri và bức ảnh công khai đầu tiên 📢</h2>
+                <div class="media-grid">
+                    <div class="media-item">
+                        <img src="first-date/12.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item">
+                        <img src="first-date/65.jpg" alt="First meeting 1">
+                    </div>
+                </div>
+                <p>Bữa đi ăn thịt nướng dô tri làm khùm làm điênggg. Nhà hàng xin 1 tấm ảnh và rồi chúm toi có bức ảnh đầu tiên cùng với nhao. Mình công khai ngày 14 hị hị  📷</p>
+                   <div class="moment-details">
+                    <div class="location">🔥 🥩 ♨️ Bros BBQ </div>
+                    <div class="date">12 Tháng 11 2023</div>
+                    <div class="emotion">😋 Bữa ăn đầy mê hoặc và đáng nhớ </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="moment right">
+            <div class="content">
+                <h2>Lọi dò sau khi nghe tin tháng sau về Bình Dương ra mắt 👩‍🍳</h2>
+                <div class="media-grid">
+                    <div class="media-item">
+                        <img src="first-date/13.jpg" alt="First meeting 1">
+                    </div>
+                </div>
+                <p>Ảnh dui vì mẹ người yêu nói có thể dìa ra mắt trong tháng 11, ảnh dui nhảy chân sáo gòi ảnh què, ảnh xa người yêu ảnh gần 5 ngày. Dời ngày về ra mắt đến tháng sau</p>
+                   <div class="moment-details">
+                    <div class="location">🏡 Ở nhà </div>
+                    <div class="date">13-14-15-16 Tháng 11 2023</div>
+                    <div class="emotion">😭 Hix lần đầu xa người yêu lâu</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Moment 6: Meeting Friends -->
+        <div class="moment left">
+            <div class="content">
+                <h2>Ăn Sập Sài Gòn 👥</h2>
+                <div class="media-grid">
+                    <div class="media-item">
+                        <img src="first-date/16.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item">
+                        <img src="first-date/17.jpg" alt="First meeting 2">
+                    </div>
+                    <div class="media-item">
+                        <img src="first-date/15.jpg" alt="First meeting 2">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/14.jpg" alt="Image 5">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/18.jpg" alt="Image 5">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/19.jpg" alt="Image 5">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/20.jpg" alt="Image 5">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/21.jpg" alt="Image 5">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/22.jpg" alt="Image 5">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/23.jpg" alt="Image 5">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/24.jpg" alt="Image 5">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/25.jpg" alt="Image 5">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/26.jpg" alt="Image 5">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/27.jpg" alt="Image 5">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/28.jpg" alt="Image 5">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/29.jpg" alt="Image 5">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/30.jpg" alt="Image 5">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/31.jpg" alt="Image 5">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/32.jpg" alt="Image 5">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/66.jpg" alt="Image 5">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/67.jpg" alt="Image 5">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/68.jpg" alt="Image 5">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/69.jpg" alt="Image 5">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/71.jpg" alt="Image 5">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/72.jpg" alt="Image 5">
+                    </div>
+                </div>
+                <p>Bình phục hết què òiiii. Sau đó là những chuỗi ngày lăn lê bò trườn khắp mọi ngóc ngách của thành phố để tìm đồ ngollll vì toy thấy em ốm quá cần thêm da thêm thịt, và gòi sau những lần ăn khum cần suy nghĩ chúng toy tăng gần chục kí 🤣</p>
+                   <div class="moment-details">
+                    <div class="location"> </div>
+                    <div class="date">Nhiều lắm hổng nhớ nổi ngày luông</div>
+                    <div class="emotion">🤭 có da có thịt cùng nhao ôm đã lắm</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Moment 7: First Festival -->
+        <div class="moment right">
+            <div class="content">
+                <h2>Kỉ niệm 1 tháng iu nhaooooo 🎉</h2>
+                <div class="media-grid">
+                    <div class="media-item">
+                        <img src="first-date/33.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item">
+                        <img src="first-date/37.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item">
+                        <img src="first-date/39.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/40.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/35.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/34.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/36.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/38.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/41.jpg" alt="First meeting 1">
+                    </div>
+                </div>
+                <p>Đó là 1 ngày sau giờ làm về anh vội chạy đi mua cái bánh kem, và 2 đứa mình đã ra chỗ sinh tố quen thuộc để kỉ niệm. Anh nhớ mãi cái ngày đó hahaha. Hôm đó mình đã đi chơi rất lâu đến tận khuya mới về. Anh nhớ mình đã làm cho em 1 cái nhẫn và a có nói: "Hiện tại anh chỉ đưa em chiếc nhẫn giấy, nhưng tương lai anh sẽ đổi nó cho em" 🤣</p>
+                   <div class="moment-details">
+                    <div class="location">🥤 Sinh tố vỉa hè</div>
+                    <div class="date">11 Tháng 12 2023</div>
+                    <div class="emotion">🎊 💝 🎉 cột mốc đầu tiên thật đáng nhớ</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Moment 8: Beach Day -->
+        <div class="moment left">
+            <div class="content">
+                <h2>Nghỉ làm để đưa dợ đi làm 🏖️</h2>
+                <div class="media-grid">
+                    <div class="media-item">
+                        <img src="first-date/42.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item">
+                        <img src="first-date/43.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item">
+                        <img src="first-date/44.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/45.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/46.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/70.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/73.jpg" alt="First meeting 1">
+                    </div>
+                </div>
+                <p>Xin nghỉ phép qua chở dợ đi làm hê hê rảnh tay nấu luông bữa trưa cho cô ấy hế hế. Èo cảm giác được làm chung chỗ nó sướng gì đâu mà tiếc quá vẫn chưa có cơ hội hahahahaha</p>
+                <div class="moment-details">
+                    <div class="location">🌟 Phở bòa to Victory Tower</div>
+                    <div class="date">20 Tháng 12 2023</div>
+                    <div class="emotion">🌅 Quá đã, đồng hành cùng em trên mọi nèo đường
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Moment 9: First Vacation -->
+        <div class="moment right">
+            <div class="content">
+                <h2>Dề nhà dợ ra mắt thoaiiii 🕴️😎</h2>
+                <div class="media-grid">
+                    <div class="media-item">
+                        <img src="first-date/47.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item">
+                        <img src="first-date/48.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item">
+                        <img src="first-date/49.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/50.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/51.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/52.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/53.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/54.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/55.jpg" alt="First meeting 1">
+                    </div>
+                </div>
+                <p>Lần đầu tiên anh đến thăm gia đình em. Những giây phút hồi hộp khi gặp ba mẹ, những món ăn ngon tuyệt cú mèo, và những kỷ niệm đáng nhớ mãi về sau hihi. Quan trọng là được cả nhà kết bạn hahahaha</p>
+                <div class="moment-details">
+                    <div class="location">🏠 Nhà người thương</div>
+                    <div class="date">23 tháng 12, 2023</div>
+                    <div class="emotion">💝 Hạnh phúc</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Moment 10: Moving In -->
+        <div class="moment left ">
+            <div class="content">
+                <h2>Giáng Sinh đầu tiên cùng nàng 🏠</h2>
+                <div class="media-grid">
+                    <div class="media-item">
+                        <img src="first-date/56.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item">
+                        <img src="first-date/57.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item">
+                        <img src="first-date/58.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/59.jpg" alt="First meeting 1">
+                    </div>
+                </div>
+                <p>Giáng sinh năm nay thật đặc biệt khi có em bên cạnh. Chỉ cần có em, mọi khoảnh khắc đều trở nên ấm áp và đáng nhớ. </p>
+                <div class="moment-details">
+                    <div class="location">🍽️ Nhà hàng</div>
+                    <div class="date">24 tháng 12, 2023</div>
+                    <div class="emotion">🎄🎁 Khoảnh khắc yêu thương</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Moment 11: First Pet -->
+        <div class="moment right">
+            <div class="content">
+                <h2>Đón giao thừa Tết Tây cùng nhaoo </h2>
+                <div class="media-grid">
+                    <div class="media-item">
+                        <img src="first-date/60.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item">
+                        <img src="first-date/61.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item">
+                        <img src="first-date/62.jpg" alt="First meeting 1">
+                    </div>
+                </div>
+                <p>Khoảnh khắc đếm ngược chào năm mới bên nhau thật đặc biệt. Nhìn pháo hoa rực rỡ trên bầu trời đêm, anh chỉ ước được đón thêm nhiều năm mới nữa cùng em.</p>
+                <div class="moment-details">
+                    <div class="location">🌃 Countdown Party, The Deck Saigon, Yen Living</div>
+                    <div class="date">31 Tháng 12, 2023 - 01 Tháng 01, 2024</div>
+                    <div class="emotion">✨ Hạnh phúc</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Moment 13: Garden Project -->
+        <div class="moment left">
+            <div class="content">
+                <h2>Ăn tất niên ở nhà người thương</h2>
+                <div class="media-grid">
+                    <div class="media-item">
+                        <img src="first-date/100.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item">
+                        <img src="first-date/99.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item">
+                        <img src="first-date/98.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/97.jpg" alt="First meeting 1">
+                    </div>
+                </div>
+                <p>Bữa tất niên ấm cúng bên gia đình em. Những món ăn ngon, những câu chuyện vui, và tình cảm gia đình khiến anh cảm thấy thật hạnh phúc và may mắn.</p>
+                <div class="moment-details">
+                    <div class="location">🏠 Nhà người thương</div>
+                    <div class="date">09 Tháng 2, 2024</div>
+                    <div class="emotion">❤️ Ấm áp</div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="moment right">
+            <div class="content">
+                <h2>Chuyển nhà trọ mới ❤️</h2>
+                <div class="media-grid">
+                    <div class="media-item">
+                        <img src="first-date/nha1.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item">
+                        <img src="first-date/nha2.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item">
+                        <img src="first-date/nha3.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/nha4.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/nha5.jpg" alt="First meeting 1">
+                    </div>
+                </div>
+                <p>Dù chỉ là căn phòng trọ nhỏ, nhưng với anh đây là nơi chứa đựng những ước mơ và hạnh phúc của chúng mình. Mỗi ngày được em đón mỗi khi đến chơi hay đi làm về là một ngày thật vui.</p>
+                <div class="moment-details">
+                    <div class="location">🏠 Phòng trọ mới</div>
+                    <div class="date">17 Tháng 02, 2024</div>
+                    <div class="emotion">🔑 Khởi đầu mới</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Moment 16: Stargazing Night -->
+        <div class="moment right">
+            <div class="content">
+                <h2>Hành trình nghiện cơm Quỳnh Anh ⭐</h2>
+                <div class="media-grid">
+                    <div class="media-item">
+                        <img src="https://source.unsplash.com/800x600/?starry-night" alt="Stars">
+                        <div class="media-overlay">📸</div>
+                    </div>
+                    <div class="media-item">
+                        <img src="https://source.unsplash.com/800x600/?night-sky" alt="Sky">
+                        <div class="media-overlay">📸</div>
+                    </div>
+                </div>
+                <p>That magical night we drove to the countryside just to watch the stars. Making wishes 
+                   on shooting stars, though I already had my biggest wish beside me.</p>
+                <div class="moment-details">
+                    <div class="location">🌟 Starlight Hill</div>
+                    <div class="date">November 1, 2023</div>
+                    <div class="emotion">✨ Wonder</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Moment 17: Volunteer Day -->
+        <div class="moment left">
+            <div class="content">
+                <h2>IU xaaa 🤝</h2>
+                <div class="media-grid">
+                    <div class="media-item">
+                        <img src="https://source.unsplash.com/800x600/?volunteering" alt="Volunteer">
+                        <div class="media-overlay">📸</div>
+                    </div>
+                    <div class="media-item">
+                        <img src="https://source.unsplash.com/800x600/?community" alt="Community">
+                        <div class="media-overlay">📸</div>
+                    </div>
+                </div>
+                <p>Volunteering at the local shelter together. Your compassion for others made me fall 
+                   in love with you even more. Making a difference, side by side.</p>
+                <div class="moment-details">
+                    <div class="location">🏥 Community Center</div>
+                    <div class="date">November 15, 2023</div>
+                    <div class="emotion">💖 Compassion</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Moment 18: Winter Adventure -->
+
+        <div class="moment right">
+            <div class="content">
+                <h2>Kỉ niệm 6 tháng 💑💕</h2>
+                <div class="media-grid">
+                    <div class="media-item">
+                        <img src="first-date/a.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item">
+                        <img src="first-date/b.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item">
+                        <img src="ann1y/a.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="ann1y/b.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="ann1y/c.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="ann1y/d.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="ann1y/e.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="ann1y/f.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="ann1y/g.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="ann1y/h.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="ann1y/j.jpg" alt="First meeting 1">
+                    </div>
+                </div>
+                <p>Nửa năm bên nhau với biết bao kỷ niệm đẹp. Mỗi ngày trôi qua, anh càng thêm yêu em nhiều hơn. Cảm ơn em đã luôn là động lực và niềm vui trong cuộc sống của anh. Mong rằng chúng mình sẽ cùng nhau đi tiếp thật nhiều chặng đường nữa em nhé.</p>
+                <div class="moment-details">
+                    <div class="location">🌟 Anniversary Date</div>
+                    <div class="date">11 Tháng 05/2024</div>
+                    <div class="emotion">💝 Hạnh phúc</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Moment 19: Special Surprise -->
+        <div class="moment left">
+            <div class="content">
+                <h2>Quỳnh Anh đi công tác ✈️💼</h2>
+                <div class="media-grid">
+                    <div class="media-item">
+                        <img src="ann1y/25.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item">
+                        <img src="ann1y/22.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item">
+                        <img src="ann1y/24.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="ann1y/23.jpg" alt="First meeting 1">
+                    </div>
+                </div>
+                <p>Dù xa cách nhưng anh luôn tự hào về em. Nhớ em nhiều lắm. Lúc nào cũng mong em xong công việc và về sớm với anh. Xa có 3 ngày tưởng 3 năm hmuuuu.</p>
+                <div class="moment-details">
+                    <div class="location">✈️ Business Trip</div>
+                    <div class="date">07 Tháng 10, 2024</div>
+                    <div class="emotion">💝 Nhớ nhung</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Moment 20: The Future -->
+        <div class="moment right">
+            <div class="content">
+                <h2>Học xong giáo lý hôn nhân 🙏✝️💑</h2>
+                <div class="media-grid">
+                    <div class="media-item">
+                        <img src="ann1y/17.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item">
+                        <img src="ann1y/19.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item">
+                        <img src="ann1y/18.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="ann1y/20.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="ann1y/21.jpg" alt="First meeting 1">
+                    </div>
+                </div>
+                <p>Một bước quan trọng trên hành trình của chúng mình đã hoàn thành. Qua những buổi học giáo lý, anh càng hiểu rõ hơn về ý nghĩa thiêng liêng của hôn nhân và trách nhiệm của người chồng tương lai. Cảm ơn em đã đồng hành cùng anh trong chặng đường này. Đặc biệt cũng là ngày gia đình 2 bên gặp nhau ở nhà anh</p>
+                <div class="moment-details">
+                    <div class="location">⛪ Nhà thờ, Trung tâm mục vụ dòng Chúa cứu thế</div>
+                    <div class="date">22 Tháng 9, 2024</div>
+                    <div class="emotion">✨ Cột mốc mới, tốt nghiệp cùng em</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Moment 21: The Future -->
+
+        <div class="moment right">
+            <div class="content">
+                <h2>Kỉ niệm 1 năm yêu nhau 💑🎉💕</h2>
+                <div class="media-grid">
+                    <div class="media-item">
+                        <img src="ann1y/1.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item">
+                        <img src="ann1y/2.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item">
+                        <img src="ann1y/3.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="ann1y/4.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="ann1y/5.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="ann1y/6.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="ann1y/7.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="ann1y/8.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="ann1y/9.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="ann1y/10.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="ann1y/11.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="ann1y/12.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="ann1y/13.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="ann1y/14.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="ann1y/15.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="ann1y/16.jpg" alt="First meeting 1">
+                    </div>
+                </div>
+                <p>Một năm trôi qua thật nhanh em nhỉ? 365 ngày với biết bao kỷ niệm đẹp, từ những buổi hẹn hò đầu tiên đến những chuyến đi xa, từ những bữa ăn đơn giản đến những dịp đặc biệt. Cảm ơn em đã luôn ở bên anh, và anh mong được tiếp tục viết nên những trang mới trong câu chuyện tình yêu của chúng mình.</p>
+                <div class="moment-details">
+                    <div class="location">🌟 Anniversary Dinner</div>
+                    <div class="date">11 Tháng 11, 2024</div>
+                    <div class="emotion">💞 Hạnh phúc trọn vẹn</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="moment right">
+            <div class="content">
+                <h2>Lễ đính hôn ở Bình Dương 💍</h2>
+                <div class="media-grid">
+                    <div class="media-item">
+                        <img src="first-date/gd1.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item">
+                        <img src="first-date/gd2.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item">
+                        <img src="first-date/gd3.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/gd4.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item hidden">
+                        <img src="first-date/gd5.jpg" alt="First meeting 1">
+                    </div>
+                </div>
+                <p>Đi dự lễ đính hôn của em họ Quỳnh Anh, vừa chung vui vừa học hỏi kinh nghiệm khì khì. Đi xong anh lại thêm quyết tâm chuẩn bị thật tốt để một ngày không xa sẽ được đón em về nhà. Cảm ơn em đã luôn ở bên và tin tưởng anh. Sẵn có được 1 bộ ảnh cùng gia đình dợ hê hê
+                </p>
+                <div class="moment-details">
+                    <div class="location">💑 Lễ đính hôn</div>
+                    <div class="date">30 Tháng 11, 2024</div>
+                    <div class="emotion">💝 Hạnh phúc & Chờ mong</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="moment right">
+            <div class="content">
+                <h2>Tối chill ở Bình Dương </h2>
+                <div class="media-grid">
+                    <div class="media-item">
+                        <img src="first-date/bc1.jpg" alt="First meeting 1">
+                    </div>
+                    <div class="media-item">
+                        <img src="first-date/bc2.jpg" alt="First meeting 1">
+                    </div>
+                </div>
+                <p>Một buổi tối lang thang ở Bến Cát thật đáng nhớ. Chỉ với 150K mà chúng mình đã có thể hốc cá diên chiên, bánh tráng nướng, hột gà nướng, trà sữa no căng. Không cần những nơi sang trọng, chỉ cần có em bên cạnh, mọi thứ đều trở nên tuyệt vời.</p>
+                <div class="moment-details">
+                    <div class="location">🍜 Bến Cát, Bình Dương</div>
+                    <div class="date">22/12/2024</div>
+                    <div class="emotion">🥰 Hạnh phúc bình dị</div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Structure -->
+    <div class="modal" id="mediaModal">
+        <div class="modal-close">&times;</div>
+        <div class="modal-container">
+            <div class="modal-nav prev">❮</div>
+            <div class="modal-content">
+                <img class="modal-media" id="modalImage">
+            </div>
+            <div class="modal-nav next">❯</div>
+        </div>
+        <div class="modal-thumbnails"></div>
+    </div>
+
+    <button class="next-button" onclick="window.location.href='fg.html'">
+        Continue Our Journey ❤
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('mediaModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalThumbnails = document.querySelector('.modal-thumbnails');
+            let currentMomentImages = [];
+            let currentImageIndex = 0;
+    
+// Process each moment's media grid
+document.querySelectorAll('.media-grid').forEach(grid => {
+        const images = grid.querySelectorAll('.media-item img');
+        const imageCount = images.length;
+
+        // Apply appropriate class based on number of images
+        if (imageCount === 1) {
+            grid.classList.add('single-image');
+        } else if (imageCount === 2) {
+            grid.classList.add('two-images');
+        } else {
+            grid.classList.add('multi-images');
+        }
+
+        // Handle more than 3 images
+        if (imageCount > 3) {
+            // Hide images after the third one
+            for (let i = 3; i < imageCount; i++) {
+                images[i].parentElement.classList.add('hidden');
+            }
+            // Add the +X overlay to the third image
+            const moreCount = imageCount - 3;
+            const overlay = document.createElement('div');
+            overlay.className = 'more-overlay';
+            overlay.textContent = `+${moreCount}`;
+            images[2].parentElement.appendChild(overlay);
+        }
+    });
+    
+            // Handle clicking on any image
+            document.querySelectorAll('.media-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const grid = this.closest('.media-grid');
+                    const allImages = Array.from(grid.querySelectorAll('.media-item img'));
+                    currentMomentImages = allImages.map(img => img.src);
+                    currentImageIndex = allImages.indexOf(this.querySelector('img'));
+                    showModal(currentImageIndex);
+                });
+            });
+    
+            function showModal(index) {
+                modalImage.src = currentMomentImages[index];
+                currentImageIndex = index;
+                modal.style.display = 'block';
+                updateThumbnails();
+            }
+    
+            function updateThumbnails() {
+                modalThumbnails.innerHTML = '';
+                currentMomentImages.forEach((src, index) => {
+                    const thumb = document.createElement('img');
+                    thumb.src = src;
+                    thumb.className = `thumbnail ${index === currentImageIndex ? 'active' : ''}`;
+                    thumb.addEventListener('click', () => showModal(index));
+                    modalThumbnails.appendChild(thumb);
+                });
+            }
+    
+            // Navigation
+            document.querySelector('.modal-nav.prev').addEventListener('click', (e) => {
+                e.stopPropagation();
+                currentImageIndex = (currentImageIndex - 1 + currentMomentImages.length) % currentMomentImages.length;
+                showModal(currentImageIndex);
+            });
+    
+            document.querySelector('.modal-nav.next').addEventListener('click', (e) => {
+                e.stopPropagation();
+                currentImageIndex = (currentImageIndex + 1) % currentMomentImages.length;
+                showModal(currentImageIndex);
+            });
+    
+            // Close modal
+            document.querySelector('.modal-close').addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+    
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (modal.style.display === 'block') {
+                    if (e.key === 'ArrowLeft') {
+                        currentImageIndex = (currentImageIndex - 1 + currentMomentImages.length) % currentMomentImages.length;
+                        showModal(currentImageIndex);
+                    }
+                    if (e.key === 'ArrowRight') {
+                        currentImageIndex = (currentImageIndex + 1) % currentMomentImages.length;
+                        showModal(currentImageIndex);
+                    }
+                    if (e.key === 'Escape') {
+                        modal.style.display = 'none';
+                    }
+                }
+            });
+    
+            // Click outside to close
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+    
+            // Prevent modal close when clicking on navigation or content
+            document.querySelector('.modal-container').addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+    
+            // Hearts Animation Functions
+            function createHearts() {
+                const heartsCount = 20;
+                for(let i = 0; i < heartsCount; i++) {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.innerHTML = '❤';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.top = Math.random() * 100 + 'vh';
+                    heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                    heart.style.animationDelay = Math.random() * 3 + 's';
+                    document.body.appendChild(heart);
+                }
+            }
+    
+            // Function to continuously create hearts
+            function startHeartAnimation() {
+                createHearts();
+                // Create new hearts every 6 seconds
+                // setInterval(createHearts, 6000);
+            }
+    
+            // Initialize hearts animation
+            startHeartAnimation();
+    
+            // Scroll Animation for Moments
+            function animateOnScroll() {
+                const moments = document.querySelectorAll('.moment');
+                moments.forEach(moment => {
+                    const position = moment.getBoundingClientRect();
+                    // If element is in viewport
+                    if(position.top < window.innerHeight - 100) {
+                        moment.style.opacity = '1';
+                    }
+                });
+            }
+    
+            // Initialize scroll animation
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Initial check
+    
+            // Handle window resize
+            let resizeTimer;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    updateThumbnails();
+                }, 250);
+            });
+    
+            // Preload next and previous images for smoother navigation
+            function preloadImages(index) {
+                const prevIndex = (index - 1 + currentMomentImages.length) % currentMomentImages.length;
+                const nextIndex = (index + 1) % currentMomentImages.length;
+                
+                new Image().src = currentMomentImages[prevIndex];
+                new Image().src = currentMomentImages[nextIndex];
+            }
+    
+            // Touch Events for Mobile
+            let touchStartX = 0;
+            let touchEndX = 0;
+    
+            modalImage.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, false);
+    
+            modalImage.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, false);
+    
+            function handleSwipe() {
+                const swipeThreshold = 50;
+                if (touchEndX < touchStartX - swipeThreshold) {
+                    // Swipe left
+                    currentImageIndex = (currentImageIndex + 1) % currentMomentImages.length;
+                    showModal(currentImageIndex);
+                }
+                if (touchEndX > touchStartX + swipeThreshold) {
+                    // Swipe right
+                    currentImageIndex = (currentImageIndex - 1 + currentMomentImages.length) % currentMomentImages.length;
+                    showModal(currentImageIndex);
+                }
+            }
+    
+            // Double click/tap to close modal
+            let lastClick = 0;
+            modalImage.addEventListener('click', (e) => {
+                const currentTime = new Date().getTime();
+                const timeDiff = currentTime - lastClick;
+                
+                if (timeDiff < 300) { // Double click threshold
+                    modal.style.display = 'none';
+                }
+                
+                lastClick = currentTime;
+            });
+        });
+    </script>
+    
+</body>
+</html>

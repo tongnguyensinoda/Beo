@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Vows</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #fff5f5, #ffe6f0);
+            font-family: 'Times New Roman', serif;
+        }
+
+        /* Cherry Blossom Animation */
+        .cherry-blossom {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .petal {
+            position: absolute;
+            background: linear-gradient(135deg, #ffd7e6, #ffb7c5);
+            border-radius: 150% 0 150% 0;
+            animation: falling linear infinite;
+            top: -10px;
+        }
+
+        @keyframes falling {
+            0% {
+                transform: translate(var(--start-x), -10%) rotate(0deg);
+                opacity: var(--opacity);
+            }
+            50% {
+                transform: translate(calc(var(--start-x) + var(--drift)), 50vh) rotate(180deg);
+                opacity: var(--opacity);
+            }
+            100% {
+                transform: translate(calc(var(--start-x) + var(--drift) * 2), 100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Add some petal variations */
+        .petal:nth-child(2n) {
+            background: linear-gradient(135deg, #fff0f5, #ffd7e6);
+        }
+
+        .petal:nth-child(3n) {
+            background: linear-gradient(135deg, #ffe6f0, #ffc0cb);
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(255, 182, 193, 0.3);
+        }
+
+        .bubble {
+            width: 300px;
+            height: 150px;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            position: relative;
+            display: inline-block;
+            font-size: 16px;
+            line-height: 1.5;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #ffd7e6;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .bubble:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(255, 182, 193, 0.3);
+        }
+
+        .bubble.left {
+            background: linear-gradient(135deg, #ffe6f0, #fff);
+            text-align: left;
+        }
+
+        .bubble.right {
+            background: linear-gradient(135deg, #fff, #ffe6f0);
+            text-align: left;
+        }
+
+        .bubble.message {
+            background-color: #ffebcd;
+            text-align: center;
+            width: 250px;
+            height: auto;
+            padding: 10px;
+            position: absolute;
+            top: 35%;
+            left: 30%;
+            display: none;
+        }
+
+        .bubble::after {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .bubble.left::after, .bubble.right::after {
+            border-width: 20px 10px 0;
+            border-color: #ffe6f0 transparent transparent transparent;
+            bottom: -20px;
+        }
+
+        .bubble.message::after {
+            border-color: #ffebcd transparent transparent transparent;
+            top: 100%;
+        }
+
+        .image-container {
+            margin: 20px auto;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .image-container img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .image-container img:hover {
+            transform: scale(1.02);
+        }
+
+        .input-container {
+            margin-top: 20px;
+        }
+
+        .input-container button {
+            background: linear-gradient(45deg, #ff69b4, #ff1493);
+            border: none;
+            padding: 12px 35px;
+            font-size: 18px;
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+        }
+
+        .input-container button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(255, 105, 180, 0.4);
+        }
+
+        .name-input {
+            border: none;
+            border-bottom: 2px solid #ff69b4;
+            font-size: 16px;
+            width: 200px;
+            background: transparent;
+            text-align: center;
+            transition: all 0.3s ease;
+            padding: 5px;
+        }
+
+        .name-input:focus {
+            outline: none;
+            border-bottom-color: #ff1493;
+            box-shadow: 0 2px 4px rgba(255, 105, 180, 0.2);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #fff, #ffe6f0);
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ff69b4;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: modalAppear 0.3s ease;
+        }
+
+        @keyframes modalAppear {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal input {
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ff69b4;
+            border-radius: 5px;
+            width: 80%;
+            box-sizing: border-box;
+            margin: 10px 0;
+        }
+
+        .modal button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background: linear-gradient(45deg, #ff69b4, #ff1493);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .modal button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+        }
+
+
+        #errorModal .modal-content {
+            padding: 30px;
+            text-align: center;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        #errorModal img {
+            border-radius: 10px;
+            margin: 0 auto;
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+
+        #errorModal button {
+            margin-top: 20px;
+            padding: 10px 30px;
+            background: linear-gradient(45deg, #ff69b4, #ff1493);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        #errorModal button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+        }
+
+        #successModal .modal-content {
+            padding: 30px;
+            text-align: center;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        #successModal img {
+            border-radius: 10px;
+            margin: 0 auto;
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .modal.fade-out {
+            animation: fadeOut 2s ease-out forwards;
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="cherry-blossom"></div>
+    <div class="container">
+        <div class="bubble message" id="message">His name is Tong</div>
+        <div class="bubble left">
+            Em là Têrêsa Hà Quỳnh Anh, nhận anh, Giuse <input type="text" id="groomNameInput2" class="name-input" placeholder="name">, làm chồng và hứa sẽ giữ lòng chung thủy với anh, khi thịnh vượng cũng như lúc gian nan, khi bệnh hoạn cũng như lúc mạnh khỏe, để yêu thương và tôn trọng anh mọi ngày suốt đời em.
+        </div>
+        <div class="bubble right">
+            Anh là, Giuse <input type="text" id="groomNameInput1" class="name-input" placeholder="name">, nhận em, Têrêsa Hà Quỳnh Anh, làm vợ và hứa sẽ giữ lòng chung thủy với em, khi thịnh vượng cũng như lúc gian nan, khi bệnh hoạn cũng như lúc mạnh khỏe, để yêu thương và tôn trọng em mọi ngày suốt đời anh.
+
+        </div>
+        <div class="image-container">
+            <img src="https://cdni.iconscout.com/illustration/premium/thumb/wedding-ceremony-illustration-download-in-svg-png-gif-file-formats--catholic-marriage-church-people-activity-pack-illustrations-8779045.png" alt="Wedding Ceremony">
+        </div>
+        <div class="input-container">
+            <button onclick="submitName()">Submit</button>
+        </div>
+    </div>
+
+    <div id="nicknameModal" class="modal">
+        <div class="modal-content">
+            <h2>"Anh gọi em là 'Bé _ _ _'" giề hử &#128527?</h2>
+            <input type="text" id="nicknameInput" placeholder="3 chữ thui đếyyyyy">
+            <button onclick="submitNickname()">Submit</button>
+        </div>
+    </div>
+
+    <div id="errorModal" class="modal">
+        <div class="modal-content">
+            <img src="meodao.jpg" alt="Error" style="width: 200px; margin-bottom: 15px;">
+            <p style="color: #ff4757; font-size: 18px;">Á à ét o ét, phát hiện ngừi lạ đột nhập &#128548;</p>
+            <button onclick="closeErrorModal()">OK</button>
+        </div>
+    </div>
+
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <img src="good.jpg" alt="Success" style="width: 200px; margin-bottom: 15px;">
+            <p style="color: #28a745; font-size: 18px;">Ái chà chà, dợ iu cụa toyyy đêyyy goàiiiii &#128536;</p>
+        </div>
+    </div>
+    
+    <script>
+        let attempts = 0;
+
+        // Create cherry blossom petals
+        function createPetals() {
+            const container = document.createElement('div');
+            container.className = 'cherry-blossom';
+            document.body.appendChild(container);
+
+            const petalCount = 50; // Increased number of petals
+            
+            for (let i = 0; i < petalCount; i++) {
+                createPetal(container);
+            }
+        }
+
+        function createPetal(container) {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            
+            // Random starting position across the entire width
+            const startPositionX = Math.random() * 100;
+            // Random drift between -20 and 20
+            const drift = (Math.random() - 0.5) * 40;
+            
+            petal.style.setProperty('--start-x', `${startPositionX}vw`);
+            petal.style.setProperty('--drift', `${drift}vw`);
+            
+            // Random size between 10px and 25px
+            const size = Math.random() * 15 + 10;
+            petal.style.width = `${size}px`;
+            petal.style.height = `${size}px`;
+            
+            // Random animation duration between 8s and 15s
+            petal.style.animationDuration = `${Math.random() * 7 + 8}s`;
+            // Random delay before animation starts
+            petal.style.animationDelay = `${Math.random() * 5}s`;
+            
+            // Random opacity between 0.6 and 1
+            petal.style.opacity = Math.random() * 0.4 + 0.6;
+            
+            // Random rotation
+            petal.style.transform = `rotate(${Math.random() * 360}deg)`;
+            
+            container.appendChild(petal);
+            
+            petal.addEventListener('animationend', () => {
+                petal.remove();
+                createPetal(container);
+            });
+        }
+
+        function submitName() {
+            const nameInput1 = document.getElementById('groomNameInput1').value;
+            const nameInput2 = document.getElementById('groomNameInput2').value;
+            const messageDiv = document.getElementById('message');
+
+            if (nameInput1 === 'Nguyễn Văn Tổng' && nameInput2 === 'Nguyễn Văn Tổng') {
+                document.getElementById('groomNameInput1').value = 'Nguyễn Văn Tổng';
+                document.getElementById('groomNameInput2').value = 'Nguyễn Văn Tổng';
+                messageDiv.textContent = '';
+                window.location.href = 'thanksletter.html';
+            } else {
+                attempts++;
+                if (attempts === 1) {
+                    messageDiv.textContent = 'Họ tên dấu đầy đủ nha coan';
+                } else if (attempts === 2) {
+                    messageDiv.textContent = 'Á đù quên tên chồng à coan';
+                } else if (attempts === 3) {
+                    messageDiv.textContent = 'Thui để Cha điền luôn choa';
+                    document.getElementById('nicknameModal').style.display = 'flex';
+                }
+                messageDiv.style.display = 'block';
+            }
+        }
+
+        // function submitNickname() {
+        //     const nicknameInput = document.getElementById('nicknameInput').value;
+        //     if (nicknameInput === 'Beo') {
+        //         document.getElementById('nicknameModal').style.display = 'none';
+        //         const groomNameInput1 = document.getElementById('groomNameInput1');
+        //         const groomNameInput2 = document.getElementById('groomNameInput2');
+        //         fillNameWithAnimation(groomNameInput1, 'Nguyễn Văn Tổng', () => {
+        //             fillNameWithAnimation(groomNameInput2, 'Nguyễn Văn Tổng', () => {
+        //                 setTimeout(() => {
+        //                     window.location.href = 'thanksletter.html';
+        //                 }, 2000);
+        //             });
+        //         });
+        //     } else {
+        //         alert('Please enter the correct nickname.');
+        //     }
+        // }
+
+        function submitNickname() {
+    const nicknameInput = document.getElementById('nicknameInput').value;
+    if (nicknameInput === 'Beo') {
+        document.getElementById('nicknameModal').style.display = 'none';
+        const successModal = document.getElementById('successModal');
+        successModal.style.display = 'flex';
+        
+        // Show success modal for 2 seconds
+        setTimeout(() => {
+            successModal.classList.add('fade-out');
+            
+            // After fade out animation, proceed with name filling
+            setTimeout(() => {
+                successModal.style.display = 'none';
+                successModal.classList.remove('fade-out');
+                
+                const groomNameInput1 = document.getElementById('groomNameInput1');
+                const groomNameInput2 = document.getElementById('groomNameInput2');
+                
+                fillNameWithAnimation(groomNameInput1, 'Nguyễn Văn Tổng', () => {
+                    fillNameWithAnimation(groomNameInput2, 'Nguyễn Văn Tổng', () => {
+                        setTimeout(() => {
+                            window.location.href = 'thanksletter.html';
+                        }, 1500);
+                    });
+                });
+            }, 2000);
+        }, 2000);
+    } else {
+        document.getElementById('errorModal').style.display = 'flex';
+    }
+}
+
+function closeErrorModal() {
+    document.getElementById('errorModal').style.display = 'none';
+}
+
+
+        function fillNameWithAnimation(element, name, callback) {
+            let index = 0;
+            element.value = '';
+            const interval = setInterval(() => {
+                element.value += name[index];
+                index++;
+                if (index === name.length) {
+                    clearInterval(interval);
+                    if (callback) callback();
+                }
+            }, 200);
+        }
+
+        // Initialize cherry blossoms
+        document.addEventListener('DOMContentLoaded', createPetals);
+    </script>
+</body>
+</html>

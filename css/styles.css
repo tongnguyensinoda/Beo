@@ -1,0 +1,286 @@
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.iframe-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.content {
+    position: relative;
+    z-index: 1;
+    color: white;
+    text-align: center;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+/* GIF Container and Message Box Styles */
+#gif-container {
+    position: relative;
+    text-align: center;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+#gif-container img {
+    width: 300px;
+    height: auto;
+    margin: 0 auto;
+}
+
+#message-container {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+.chatbox {
+    background: white;
+    border: 2px solid #fd1853;
+    border-radius: 15px;
+    padding: 10px 20px;
+    position: relative;
+    max-width: 300px;
+    animation: popIn 0.5s cubic-bezier(0.26, 0.53, 0.74, 1.48);
+}
+
+.chatbox p {
+    color: #fd1853;
+    font-size: 1.1em;
+    margin: 0;
+    font-weight: 700;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.chatbox span {
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #fd1853;
+}
+
+/* Heading Styles */
+h1 {
+    font-weight: 700;
+    color: rgb(255, 148, 148);
+    margin-bottom: 30px;
+}
+
+/* Button Container Styles */
+#button-container {
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 20px 0;
+    pointer-events: auto;
+}
+
+/* Button Styles */
+.heart-button {
+    position: relative;
+    overflow: hidden;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    width: 10em;
+    border-radius: 1.2rem;
+    background: #fd1853;
+    box-shadow: 0 .4rem #dfd9d9;
+    cursor: pointer;
+    border: 1px solid #fd1853;
+    transition: transform 0.5s ease-in-out, background-color 0.5s ease, color 0.5s ease;
+    z-index: 1;
+}
+
+.heart-button.transformed {
+    padding: 1rem 2rem;
+    white-space: nowrap;
+    width: auto;
+    min-width: 200px;
+}
+
+.heart-button span {
+    position: relative;
+    z-index: 3;
+    color: #fff;
+    transition: color 0.5s ease;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+.heart-button.transformed span {
+    font-weight: 800;
+}
+
+.heart-button .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fd1853;
+    z-index: 2;
+    transition: opacity 0.5s ease;
+}
+
+.heart-button:hover .overlay {
+    opacity: 0;
+}
+
+.heart-button:hover {
+    background-color: #fff;
+}
+
+.heart-button:hover span {
+    color: #fd1853;
+}
+
+/* Heart Animation Styles */
+.heart-button .heart {
+    position: absolute;
+    animation: float 5s infinite;
+    z-index: 1;
+    filter: drop-shadow(0 0 5px #fd1853);
+}
+
+.heart-button .star-1 { top: 10px; left: 10px; animation-delay: 0s; }
+.heart-button .star-3 { top: 5px; right: 20px; animation-delay: 0.5s; }
+.heart-button .star-4 { bottom: 10px; left: 15px; animation-delay: 1s; }
+.heart-button .star-5 { bottom: 15px; right: 10px; animation-delay: 1.5s; }
+.heart-button .star-6 { top: 20px; right: 5px; animation-delay: 2s; }
+
+.face {
+    filter: drop-shadow(0 0 5px #fd1853);
+}
+
+/* Animations */
+@keyframes float {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(10px, -10px); }
+    50% { transform: translate(-10px, 10px); }
+    75% { transform: translate(10px, 10px); }
+}
+
+@keyframes popIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* No Button Specific Styles */
+#no-button {
+    transition: all 0.3s ease;
+    will-change: transform, left, top;
+    touch-action: none;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    #gif-container img {
+        width: 250px;
+    }
+
+    .chatbox {
+        max-width: 250px;
+        padding: 8px 15px;
+    }
+
+    .chatbox p {
+        font-size: 1em;
+    }
+
+    .heart-button {
+        padding: 0.8rem 1.6rem;
+        font-size: 1rem;
+        width: 8em;
+    }
+    
+    .heart-button.transformed {
+        padding: 0.8rem 1.6rem;
+        min-width: 180px;
+    }
+
+    #button-container {
+        gap: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    #gif-container img {
+        width: 200px;
+    }
+
+    .heart-button {
+        padding: 0.7rem 1.4rem;
+        font-size: 0.9rem;
+        width: 7em;
+    }
+    
+    .heart-button.transformed {
+        padding: 0.7rem 1.4rem;
+        min-width: 160px;
+    }
+
+    #button-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+        padding: 0 15px;
+    }
+}

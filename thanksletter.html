@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Update the body background and add snow ground effect */
+        body {
+            margin: 0;
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            /* Dark night sky gradient with stars */
+            background: linear-gradient(to bottom, 
+                #0a1332 0%, /* Dark night sky */
+                #1a2744 40%, /* Lighter night sky */
+                #2c3e50 70%, /* Transition to snow */
+                #ffffff 100% /* Snow ground */
+            );
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+
+        /* Add twinkling stars */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70vh; /* Only cover the sky portion */
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite;
+        }
+
+        /* Add snow ground overlay */
+        .snow-ground {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30vh;
+            background: linear-gradient(to bottom, 
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0.3) 20%,
+                rgba(255,255,255,0.8) 50%,
+                rgba(255,255,255,1) 100%
+            );
+            pointer-events: none;
+        }
+
+        /* Star twinkling animation */
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Snowfall effect */
+        .snowflake {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            filter: blur(1px);
+            animation: snowfall linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes snowfall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Cherry blossom */
+        .cherry-blossom {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #ffd1dc;
+            border-radius: 12px 1px;
+            filter: blur(0.5px);
+            animation: fall linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        #envelope {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4));
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        #envelope > * {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none;
+        }
+
+        #back {
+            display: block;
+            z-index: 0;
+        }
+
+        #front {
+            display: block;
+            z-index: 10;
+        }
+
+        #top {
+            display: block;
+            z-index: 11;
+        }
+
+        #top.animate,
+        #front.animate,
+        #back.animate,
+        #envelope button.animate {
+            opacity: 0;
+            transition: opacity 1s;
+            transition-delay: 1s;
+        }
+
+        #letter {
+            display: block;
+            position: absolute;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            /* Christmas paper texture */
+            background: linear-gradient(135deg, #fff6e9 0%, #fff 100%);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            z-index: 5;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            top: 150px;
+            border-radius: 15px;
+            overflow: auto;
+            font-size: 18px;
+            scrollbar-width: none;
+        }
+
+        /* Update button styles for better visibility */
+        #envelope button,
+        #letter a.button {
+            box-shadow: 0 5px 20px rgba(196, 30, 58, 0.4);
+        }
+
+        #letter::-webkit-scrollbar {
+            display: none;
+        }
+
+        #letter.animate {
+            animation: makebig 2s forwards;
+            animation-delay: 1s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #letter h1 {
+            font-family: 'Dancing Script', cursive;
+            color: #c41e3a; /* Christmas red */
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            text-align: center;
+        }
+
+        #letter h2 {
+            font-family: 'Dancing Script', cursive;
+            color: #c41e3a;
+            margin: 10px 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        #letter p {
+            line-height: 1.8;
+            color: #2d5449; /* Dark green */
+            text-align: center;
+            margin: 20px 0;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        #letter img {
+            width: 90%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            margin: 20px 0;
+            border: 3px solid #c41e3a;
+        }
+
+        #letter img:hover {
+            transform: scale(1.02);
+        }
+
+        /* Christmas style button */
+        #envelope button {
+            display: block;
+            z-index: 15;
+            width: 80px;            /* Increased from 60px */
+            height: 80px;           /* Increased from 60px */
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(45deg, #c41e3a, #ff424f);
+            font-weight: bold;
+            text-align: center;
+            color: white;
+            cursor: pointer;
+            top: calc(250px - 40px);
+            left: calc(250px - 40px);
+            transition: all 0.5s ease;
+            box-shadow: 0 5px 15px rgba(196, 30, 58, 0.3);
+            
+            /* Updated text styles */
+            font-size: 20px;        /* Increased font size */
+            font-weight: 700;       /* Bolder text */
+            letter-spacing: 1px;    /* Better letter spacing */
+            padding: 5px;           /* Added padding */
+            display: flex;          /* For better text centering */
+            align-items: center;    /* Center vertically */
+            justify-content: center;/* Center horizontally */
+        }
+
+        /* Hover effect */
+        #envelope button:hover {
+            transform: scale(1.2);
+            box-shadow: 0 8px 20px rgba(196, 30, 58, 0.4);
+            font-size: 22px;        /* Slightly larger on hover */
+        }
+
+        /* Active state */
+        #envelope button:active {
+            transform: scale(1.1);
+        }
+
+        #letter a.button {
+            display: inline-block;
+            padding: 12px 30px;
+            margin-top: 20px;
+            background: linear-gradient(45deg, #c41e3a, #ff424f);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(196, 30, 58, 0.3);
+        }
+
+        #letter a.button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(196, 30, 58, 0.4);
+        }
+
+        /* Add these CSS rules after your existing styles */
+        .christmas-character {
+            position: absolute;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.8;
+            transition: transform 0.3s ease;
+        }
+
+        /* Santa positioning and animation */
+        .santa {
+            width: 400px; /* Increased from 150px */
+            height: 200px; /* Increased from 150px */
+            position: fixed;
+            top: 10%;
+            animation: santaFly 50s linear infinite; /* Increased duration for smoother movement */
+            z-index: -1;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3)); /* Add shadow for better visibility */
+        }
+
+        /* Reindeer positioning and animation */
+        .reindeer {
+            width: 500px;
+            height: 500px;
+            bottom: 5%;
+            left: 5%;
+            /* animation: floatReindeer 5s ease-in-out infinite; */
+        }
+
+        /* Elf positioning and animation
+        .elf {
+            width: 100px;
+            height: 100px;
+            top: 20%;
+            left: 8%;
+            animation: floatElf 3s ease-in-out infinite;
+        } */
+
+        /* Snowman positioning and animation */
+        .snowman {
+            width: 500px;
+            height: 500px;
+            bottom: 10%;
+            right: 5%;
+        }
+
+        /* Santa flying animation */
+        @keyframes santaFly {
+            0% {
+                left: -150px; /* Start from outside the screen */
+                transform: translateY(0) rotate(5deg);
+            }
+            25% {
+                transform: translateY(-20px) rotate(-5deg);
+            }
+            50% {
+                transform: translateY(0) rotate(5deg);
+            }
+            75% {
+                transform: translateY(-20px) rotate(-5deg);
+            }
+            100% {
+                left: 100%; /* Move to the right edge of the screen */
+                transform: translateY(0) rotate(5deg);
+            }
+        }
+
+        /* Add sleigh trail effect */
+        .santa::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -50px;
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(to left, rgba(255, 255, 255, 0.8), transparent);
+            filter: blur(1px);
+            pointer-events: none;
+        }
+
+        /* Floating animations for each character */
+        @keyframes floatSanta {
+            0%, 100% { transform: translateY(0) rotate(5deg); }
+            50% { transform: translateY(-20px) rotate(-5deg); }
+        }
+
+        @keyframes floatReindeer {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(15px) rotate(5deg); }
+        }
+
+        @keyframes floatElf {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.05); }
+        }
+
+        @keyframes floatSnowman {
+            0%, 100% { transform: translateY(0) rotate(3deg); }
+            50% { transform: translateY(10px) rotate(-3deg); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .christmas-character {
+                transform: scale(0.7);
+            }
+            .santa { right: 2%; }
+            .reindeer { left: 2%; }
+            .elf { left: 5%; }
+            .snowman { right: 5%; }
+        }
+
+        @media (max-width: 480px) {
+            .christmas-character {
+                transform: scale(0.5);
+            }
+        }
+
+
+        @keyframes makebig {
+            0% {
+                top: 150px;
+                left: 20px;
+                right: 20px;
+                bottom: 20px;
+                font-size: 18px;
+                opacity: 1;
+            }
+            33% {
+                top: -100px;
+                left: 20px;
+                right: 20px;
+                bottom: 150px;
+                font-size: 18px;
+                opacity: 1;
+            }
+            100% {
+                top: -100px;
+                left: -30px;
+                right: -30px;
+                bottom: -100px;
+                font-size: 24px;
+                opacity: 1;
+            }
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            #envelope {
+                transform: scale(0.7);
+            }
+            #letter h1 { font-size: 2em; }
+            #letter p { font-size: 16px; }
+            .santa {
+                width: 100px;
+                height: 100px;
+            }
+
+            #envelope button {
+                width: 70px;
+                height: 70px;
+                font-size: 18px;
+            }
+            
+            #envelope button:hover {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #envelope {
+                transform: scale(0.5);
+            }
+            #letter h1 { font-size: 1.8em; }
+            #letter p { 
+                font-size: 14px;
+                padding: 0 10px;
+            }
+            .santa {
+                width: 80px;
+                height: 80px;
+            }
+
+            #envelope button {
+                width: 60px;
+                height: 60px;
+                font-size: 16px;
+            }
+            
+            #envelope button:hover {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+        <!-- Add these elements right after <body> -->
+    <div class="santa-container">
+        <img src="santa.png" alt="Anime Santa" class="christmas-character santa">
+    </div>
+    <img src="snowman2.png" alt="Anime Reindeer" class="christmas-character reindeer">
+    <img src="christmastree.png" alt="Anime Snowman" class="christmas-character snowman">
+    <div class="stars"></div>
+    <div class="snow-ground"></div>
+    <div id='envelope'>
+        <!-- Update envelope colors to match Christmas theme -->
+        <div id='back'>
+            <svg xmlns="http://www.w3.org/2000/svg" height="500" width="500">
+                <polygon points="0,150 500,150 500,500 0,500" style="fill:#c41e3a;stroke:none;" />
+            </svg>
+        </div>
+        <div id='front'>
+            <svg xmlns="http://www.w3.org/2000/svg" height="500" width="500">
+                <polygon points="0,150 250,250 500,150 500,500 0,500" style="fill:#ff424f;stroke:#c41e3a;stroke-width:3" />
+            </svg>
+        </div>
+        <div id='top'>
+            <svg xmlns="http://www.w3.org/2000/svg" height="500" width="500">
+                <polygon points="0,150 250,250 500,150" style="fill:#c41e3a;stroke:#c41e3a;stroke-width:2">
+                    <animate id='opentop' attributeName="points" dur="0.5s" fill="freeze" begin="indefinite" 
+                        from="0,150 250,250 500,150" to="0,150 250,0 500,150" />
+                </polygon>
+            </svg>
+        </div>
+        <div id='letter'>
+            <!-- Your letter content -->
+            <h1>To: Quỳnh Anh &#10083</h1>
+            <img src='https://mimosawedding.vn/wp-content/uploads/2021/11/thu-to-tinh-11.jpg' alt="Love Letter Image">
+            <p>Em thương mến,<br><br>
+
+Thời gian trôi qua thật nhanh, mới đó mà chúng mình đã bên nhau hơn một năm rồi. Anh vẫn nhớ như in ngày đầu tiên mình gặp nhau, và từ đó đến nay, mỗi ngày trôi qua đều là một món quà đặc biệt đối với anh.<br><br>
+
+Trong một năm qua, có những lúc vui, có những lúc buồn, có cả những lúc anh đã làm em buồn. Anh thật sự xin lỗi về những lần như vậy. Mỗi lần như thế, anh đều tự nhủ phải trở thành một người tốt hơn, xứng đáng hơn với tình yêu của em.<br><br>
+
+Cảm ơn em đã luôn ở bên cạnh, chia sẻ những khoảnh khắc đẹp đẽ và cả những khó khăn trong cuộc sống. Cảm ơn vì đã chấp nhận những thiếu sót của anh, và vẫn kiên nhẫn đồng hành cùng anh trên chặng đường này.<br><br>
+
+Đôi khi anh hay mơ về tương lai, về một ngôi nhà nhỏ với khu vườn đầy hoa, nơi chúng mình có thể cùng nhau xây dựng những kỷ niệm đẹp. Anh tin rằng những điều tốt đẹp nhất vẫn đang đợi chúng mình phía trước, và anh muốn được cùng em viết tiếp câu chuyện của chúng mình, không chỉ cho ngày mai, mà cho cả những năm tháng sau này.<br><br>
+
+Có những quyết định trong đời cần thời gian để suy nghĩ, nhưng với anh, quyết định muốn được ở bên em là điều hiển nhiên nhất. Anh chỉ hy vọng em cũng nghĩ như vậy.<br><br>
+
+Nhân dịp Giáng sinh này, anh chúc em có một mùa Noel thật ấm áp và hạnh phúc. Mong rằng những điều kỳ diệu của mùa Giáng sinh sẽ mang đến cho em thật nhiều niềm vui và những ước mơ thành hiện thực. Anh mong được đón những mùa Giáng sinh tiếp theo cùng em, người con gái anh yêu thương nhất.</p>
+            <h2>Yêu em rất nhiều &#x2661;,</h2>
+            <h2>Tong &#x2764;</h2>
+            <p>P/S: Cuối tuần này anh có chuyện quan trọng muốn nói với em. Hãy dành thời gian cho anh, em nhé!</p>
+            <a href="love-journey.html" class="button">Cùng nhìn lại 1 năm qua nhé  &#x2767;</a>
+        </div>
+        <button onclick='openUp()'>Open ❄️</button>
+    </div>
+
+    <script>
+        function createSnowAndBlossoms() {
+            // Create more snowflakes for better effect
+            for(let i = 0; i < 100; i++) {
+                const snow = document.createElement('div');
+                snow.className = 'snowflake';
+                snow.style.left = Math.random() * 100 + 'vw';
+                snow.style.animationDuration = Math.random() * 5 + 3 + 's';
+                snow.style.opacity = Math.random() * 0.5 + 0.5;
+                snow.style.transform = `scale(${Math.random()})`;
+                document.body.appendChild(snow);
+            }
+
+            // Create cherry blossoms (keep your existing code)
+            for(let i = 0; i < 30; i++) {
+                const blossom = document.createElement('div');
+                blossom.className = 'cherry-blossom';
+                blossom.style.left = Math.random() * 100 + 'vw';
+                blossom.style.animationDuration = Math.random() * 3 + 2 + 's';
+                blossom.style.opacity = Math.random() * 0.7;
+                blossom.style.transform = `scale(${Math.random() * 0.5 + 0.5})`;
+                document.body.appendChild(blossom);
+            }
+        }
+
+        // Add this to your existing JavaScript
+        function initializeCharacters() {
+            const characters = document.querySelectorAll('.christmas-character');
+            
+            characters.forEach(character => {
+                // Random initial position adjustment
+                const randomOffset = Math.random() * 20 - 10;
+                character.style.transform = `translateY(${randomOffset}px)`;
+                
+                // Random animation delay
+                character.style.animationDelay = `${Math.random() * 2}s`;
+            });
+        }
+
+        function initializeSanta() {
+            const santa = document.querySelector('.santa');
+            
+            // Function to reset Santa's animation with random height
+            function resetSantaPosition() {
+                const randomHeight = Math.random() * 10 + 10; // Random height between 10% and 20%
+                santa.style.top = `${randomHeight}%`;
+                
+                // Remove and reapply animation to restart it
+                santa.style.animation = 'none';
+                santa.offsetHeight; // Trigger reflow
+                santa.style.animation = 'santaFly 15s linear infinite';
+            }
+
+            // Reset Santa's position when animation ends
+            santa.addEventListener('animationend', resetSantaPosition);
+            
+            // Initial position
+            resetSantaPosition();
+        }
+
+        window.addEventListener('mousemove', (e) => {
+            const stars = document.querySelector('.stars');
+            const snowGround = document.querySelector('.snow-ground');
+            const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
+            const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
+            
+            stars.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            snowGround.style.transform = `translate(${moveX * 0.5}px, 0)`;
+        });
+
+        function createStars() {
+            const starsContainer = document.querySelector('.stars');
+            const numberOfStars = 100;
+
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                // Random star properties
+                const size = Math.random() * 3 + 1;
+                const left = Math.random() * 100;
+                const top = Math.random() * 70; // Only in sky area
+                const duration = Math.random() * 3 + 2;
+                
+                star.style.cssText = `
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${left}%;
+                    top: ${top}%;
+                    --duration: ${duration}s;
+                `;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+
+
+
+        function openUp() {
+            const $opentop = document.querySelector('#opentop');
+            const $top = document.querySelector('#top');
+            const $front = document.querySelector('#front');
+            const $back = document.querySelector('#back');
+            const $letter = document.querySelector('#letter');
+            const $button = document.querySelector('button');
+
+            $opentop.beginElement();
+            $top.style.zIndex = 2;
+
+            $top.classList.add('animate');
+            $front.classList.add('animate');
+            $back.classList.add('animate');
+            $button.classList.add('animate');
+            $letter.classList.add('animate');
+        }
+
+        function addSantaSounds() {
+            const bellSound = new Audio('path-to-your-bell-sound.mp3'); // Add your bell sound file
+            const santa = document.querySelector('.santa');
+
+            santa.addEventListener('mouseenter', () => {
+                bellSound.currentTime = 0;
+                bellSound.play();
+            });
+        }
+
+        // Update your window.onload function
+        window.onload = function() {
+            createSnowAndBlossoms();
+            initializeCharacters();
+            initializeSanta();
+            createStars();
+            addSantaInteractivity();
+            addSantaSounds()
+        };
+    </script>
+</body>
+</html>
